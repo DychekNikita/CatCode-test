@@ -36,7 +36,7 @@ body{
 }
 .hints{
     width: 600px;
-    color: #000;
+    color:gray;
     font-size: 20px;
     font-family: 'Jost', sans-serif;
     position: relative;
@@ -50,6 +50,7 @@ body{
 }
 
 .hint{
+    color: #000;
     list-style: none;
     padding: 5px;
 }

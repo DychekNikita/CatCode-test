@@ -1,13 +1,16 @@
-const address = document.querySelector('.address')
 const url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address";
 const token = "adbbe124727597c5ef767121b785ef661faf41ad";
+
 $('.hints').hide()
 let createElem = (result) => {
     $('.hints').hide()
     if (result.length === 0){
-        $('.hints').text('Указанного адреса не существует')
         $('.hints').show()
-       return;
+        $('.hints').text('Указанного адреса не существует')
+    }
+    if(!$('.address').val()){
+        $('.hints').text('')
+        $('.hints').hide('')
     }
     result.forEach(element => {
           $('.hints').append($('<li>',
@@ -15,9 +18,9 @@ let createElem = (result) => {
             'class': 'hint',
             text: element.value
           }
-          ));
+          ))
         $('.hints').show()
-});
+})
 }
 
  $('.address').on('input', e => {
@@ -36,7 +39,17 @@ let createElem = (result) => {
     fetch(url, options)
         .then(response => response.json())
         .then(result => {
-            createElem(result.suggestions);
+            createElem(result.suggestions)
         })
         .catch(error => console.log("error", error));
+        if (!$('.address').val().length){
+            $('.hints').hide()
+        }
 });
+
+$('.hints').on('click', (e) => {
+    const target = e.target
+    if($('li').hasClass('hint')){
+        $('.address').val(target.textContent)
+    }
+})
